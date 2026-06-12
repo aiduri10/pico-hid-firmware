@@ -24,6 +24,13 @@ Host PC ──BLE──▶ Pico W ──USB HID──▶ Target PC
 Get the host program (Linux/Windows) from the companion repo:
 **[pico-hid-host](https://github.com/aiduri10/pico-hid-host)**
 
+```bash
+git clone https://github.com/aiduri10/pico-hid-host
+cd pico-hid-host
+bash install.sh   # Linux/macOS
+# or: .\install.ps1  (Windows)
+```
+
 ## Build
 
 Requirements: [Pico SDK](https://github.com/raspberrypi/pico-sdk) with BTstack and TinyUSB.
