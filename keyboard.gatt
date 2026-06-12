@@ -1,0 +1,17 @@
+// Pico BT HID Bridge - GATT Profile
+
+PRIMARY_SERVICE, GAP_SERVICE
+CHARACTERISTIC, GAP_DEVICE_NAME, READ, "PicoHID"
+
+// ECDH Handshake Service (requires LESC link encryption)
+// Protocol: host reads Pico pubkey → writes host pubkey → both derive session AES key
+PRIMARY_SERVICE, 12340003-0000-1000-8000-00805F9B34FB
+// Pico's P-256 public key (64 bytes, raw X||Y, no 0x04 prefix)
+CHARACTERISTIC, 12340004-0000-1000-8000-00805F9B34FB, DYNAMIC | READ | ENCRYPTION_KEY_SIZE_16,
+// Host's P-256 public key (64 bytes, raw X||Y)
+CHARACTERISTIC, 12340005-0000-1000-8000-00805F9B34FB, DYNAMIC | WRITE | ENCRYPTION_KEY_SIZE_16,
+
+// HID Bridge Service (session key established before use)
+PRIMARY_SERVICE, 12340001-0000-1000-8000-00805F9B34FB
+// HID reports: 20 bytes = counter(4) + AES-128-CTR(press(8)+release(8))
+CHARACTERISTIC, 12340002-0000-1000-8000-00805F9B34FB, DYNAMIC | WRITE | WRITE_WITHOUT_RESPONSE | ENCRYPTION_KEY_SIZE_16,
